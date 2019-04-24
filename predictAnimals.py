@@ -24,7 +24,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 ##CREATING DATAFRAME ##
-dataframe = pd.read_csv("C:/Users/User/Downloads/zoo_.csv")
+dataframe = pd.read_csv("C:/Users/User/Downloads/zoo1.csv")
 df = dataframe
 
 ##DROP ANIMAL_NAME BECAUSE WE WANT TO PREDICT THAT
@@ -332,7 +332,7 @@ def refresh_prediction(newPredButton, input_hair, input_feathers, input_eggs, in
          trees = tree.fit(train_features, train_targets)
          prediction= trees.predict(features) 
          
-         return "OTHER PREDICTION {}".format(prediction)   
+         return " OTHER PREDICTION {}".format(prediction)   
     
 @app.callback(Output('output-container-button', 'children'),
               [Input('button', 'n_clicks'), 
@@ -351,8 +351,8 @@ def refresh_prediction(newPredButton, input_hair, input_feathers, input_eggs, in
                Input('input-tail','value'),
                Input('input-domestic','value'),
                Input('input-class-type', 'value'), 
-               Input('input-legs' , 'value'),
-               Input('input-box', 'value')])
+               Input('input-legs' , 'value')],
+               [State('input-box', 'value')])
 
 ##UPDATE USER INPUT DATA INTO THE CSV FILE  
 def update_output(button, input_hair, input_feathers, input_eggs, input_milk, input_airborne, 
@@ -379,7 +379,7 @@ def update_output(button, input_hair, input_feathers, input_eggs, input_milk, in
                     "domestic": input_domestic,
                     "class_type" : input_class_type}, ignore_index = True) 
         
-        newAnimal.to_csv("C:/Users/User/Downloads/zoo_.csv", index = False)
+        newAnimal.to_csv("C:/Users/User/Downloads/zoo1.csv", index = False)
         return "{} has been updated in training data ".format(input_box)
          
       
