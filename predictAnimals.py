@@ -24,7 +24,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 ##CREATING DATAFRAME ##
-dataframe = pd.read_csv("C:/Users/User/Downloads/zoo-.csv")
+dataframe = pd.read_csv("C:/Users/User/Downloads/zoo_.csv")
 df = dataframe
 
 ##DROP ANIMAL_NAME BECAUSE WE WANT TO PREDICT THAT
@@ -279,56 +279,10 @@ def return_value (input_hair, input_feathers, input_eggs, input_milk, input_airb
         trees = tree.fit(train_features, train_targets)
         prediction= trees.predict(features) 
         
-        return "PREDICTION : {} ".format(prediction)
+        return "PREDICTION: {} ".format(prediction)
     
-@app.callback(Output('output-container-button', 'children'),
-              [Input('button', 'n_clicks'), 
-               Input('input-hair','value'),
-               Input('input-feathers','value'),
-               Input('input-eggs','value'),
-               Input('input-milk','value'),
-               Input('input-airborne','value'),
-               Input('input-aquatic','value'),
-               Input('input-predator','value'),
-               Input('input-toothed','value'),
-               Input('input-backbone','value'),
-               Input('input-breathes','value'),
-               Input('input-venomous','value'),
-               Input('input-fins','value'), 
-               Input('input-tail','value'),
-               Input('input-domestic','value'),
-               Input('input-class-type', 'value'), 
-               Input('input-legs' , 'value')],
-              [State('input-box', 'value')])
-
-##UPDATE USER INPUT DATA INTO THE CSV FILE  
-def update_output(button, input_hair, input_feathers, input_eggs, input_milk, input_airborne, 
-                  input_aquatic, input_predator, input_toothed, input_backbone, 
-                  input_breathes, input_venomous, input_fins, input_tail, input_domestic,input_class_type, input_legs, input_box):
-         
-      
-       
-        newAnimal = dataframe.append( {"animal_name" : input_box,
-                    "hair": input_hair, 
-                    "feathers": input_feathers,
-                    "eggs": input_eggs,
-                    "milk": input_milk,
-                    "airborne": input_airborne,
-                    "aquatic": input_aquatic,
-                    "predator": input_predator,
-                    "toothed": input_toothed,
-                    "backbone": input_backbone,
-                    "breathes": input_breathes,
-                    "venomous": input_venomous,
-                    "fins": input_fins,
-                    "legs": input_legs,
-                    "tail": input_tail,
-                    "domestic": input_domestic,
-                    "class_type" : input_class_type}, ignore_index = True) 
-        
-        newAnimal.to_csv("C:/Users/User/Downloads/zoo-.csv", index = False)
-        return "{} has been updated in training data ".format(input_box)
-         
+    
+    
 @app.callback(Output('output-refresh', 'children'),
               [Input('newPredButton', 'n_clicks')], 
               [State('input-hair','value'),
@@ -344,7 +298,9 @@ def update_output(button, input_hair, input_feathers, input_eggs, input_milk, in
                State('input-venomous','value'),
                State('input-fins','value'), 
                State('input-tail','value'),
-               State('input-domestic','value')]) 
+               State('input-domestic','value'), 
+               State('input-class-type' , 'value'), 
+               State('input-legs', 'value')]) 
 
 
 #TO FIND OTHER PREDICTION
@@ -376,7 +332,57 @@ def refresh_prediction(newPredButton, input_hair, input_feathers, input_eggs, in
          trees = tree.fit(train_features, train_targets)
          prediction= trees.predict(features) 
          
-         return "OTHER PREDICTION {}".format(prediction)         
+         return "OTHER PREDICTION {}".format(prediction)   
+    
+@app.callback(Output('output-container-button', 'children'),
+              [Input('button', 'n_clicks'), 
+               Input('input-hair','value'),
+               Input('input-feathers','value'),
+               Input('input-eggs','value'),
+               Input('input-milk','value'),
+               Input('input-airborne','value'),
+               Input('input-aquatic','value'),
+               Input('input-predator','value'),
+               Input('input-toothed','value'),
+               Input('input-backbone','value'),
+               Input('input-breathes','value'),
+               Input('input-venomous','value'),
+               Input('input-fins','value'), 
+               Input('input-tail','value'),
+               Input('input-domestic','value'),
+               Input('input-class-type', 'value'), 
+               Input('input-legs' , 'value'),
+               Input('input-box', 'value')])
+
+##UPDATE USER INPUT DATA INTO THE CSV FILE  
+def update_output(button, input_hair, input_feathers, input_eggs, input_milk, input_airborne, 
+                  input_aquatic, input_predator, input_toothed, input_backbone, 
+                  input_breathes, input_venomous, input_fins, input_tail, input_domestic,input_class_type, input_legs, input_box):
+         
+      
+       
+        newAnimal = dataframe.append( {"animal_name" : input_box,
+                    "hair": input_hair, 
+                    "feathers": input_feathers,
+                    "eggs": input_eggs,
+                    "milk": input_milk,
+                    "airborne": input_airborne,
+                    "aquatic": input_aquatic,
+                    "predator": input_predator,
+                    "toothed": input_toothed,
+                    "backbone": input_backbone,
+                    "breathes": input_breathes,
+                    "venomous": input_venomous,
+                    "fins": input_fins,
+                    "legs": input_legs,
+                    "tail": input_tail,
+                    "domestic": input_domestic,
+                    "class_type" : input_class_type}, ignore_index = True) 
+        
+        newAnimal.to_csv("C:/Users/User/Downloads/zoo_.csv", index = False)
+        return "{} has been updated in training data ".format(input_box)
+         
+      
      
 if __name__ == '__main__':
     app.run_server(debug=True)
